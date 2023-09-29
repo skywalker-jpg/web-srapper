@@ -105,12 +105,12 @@ func ProcessChildNodes(url string, db *sql.DB) {
 
 // WorkChildNodes обрабатывает дочерние узлы, начиная с указанных URL.
 func WorkChildNodes(childNodes []string, db *sql.DB) {
-	for _, childURL := range childNodes {
+	for _, child_id := range childNodes {
 		// Проверяем, не был ли узел уже обработан.
-		if !work_DB.IsNodeProcessed(childURL, db) {
+		if !work_DB.IsNodeProcessed(child_id, db) {
 			// Если узел не обработан, выполняем его обработку и помечаем как обработанный.
-			ProcessChildNodes(childURL, db)
-			work_DB.MarkNodeAsProcessed(childURL, db)
+			ProcessChildNodes(child_id, db)
+			work_DB.MarkNodeAsProcessed(child_id, db)
 		}
 	}
 }

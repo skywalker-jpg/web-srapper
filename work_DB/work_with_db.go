@@ -9,7 +9,7 @@ import (
 func InsertIntoRoot_nodes(node_name, subChildren, subNodesTotal, description, information string, db *sql.DB) {
 	// Подготовка SQL-запроса для вставки данных.
 	insertRootNodeStmt, err := db.Prepare(`
-        INSERT INTO root_nodes (node_name, subChildren, subNodesTotal, description, information)
+        INSERT OR IGNORE INTO root_nodes (node_name, subChildren, subNodesTotal, description, information)
         VALUES (?, ?, ?, ?, ?)
     `)
 
@@ -25,19 +25,17 @@ func InsertIntoRoot_nodes(node_name, subChildren, subNodesTotal, description, in
 
 // InsertIntoChildNodes выполняет вставку данных о дочерних узлах в таблицу child_nodes базы данных.
 func InsertIntoChild_nodes(node_name, sub_children, sub_nodes_total string, db *sql.DB) {
-	// Подготовка SQL-запроса для вставки данных.
+
+	// Если записи с таким node_name еще нет, то выполняем вставку.
 	insertChildNodeStmt, err := db.Prepare(`
-		INSERT INTO child_nodes (node_name, sub_children, sub_nodes_total)
+		INSERT OR IGNORE INTO child_nodes (node_name, sub_children, sub_nodes_total)
 		VALUES (?, ?, ?)
 	`)
-
 	handleError(err)
 
-	// Выполнение вставки данных в таблицу child_nodes.
 	_, err = insertChildNodeStmt.Exec(node_name, sub_children, sub_nodes_total)
 	handleError(err)
 
-	// Закрытие подготовленного выражения после использования.
 	insertChildNodeStmt.Close()
 }
 

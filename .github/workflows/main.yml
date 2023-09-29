@@ -25,7 +25,6 @@ jobs:
           go test ./...          
 
       - name: Test main package
-        working-directory: main
         run: |
           go test ./...
       

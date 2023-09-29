@@ -7,6 +7,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// setupTestDatabase создает временную базу данных для тестов и возвращает ссылку на нее.
+// Функция также возвращает функцию очистки, которая закрывает базу данных после завершения тестов.
 func setupTestDatabase(t *testing.T) (*sql.DB, func()) {
 	db, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
@@ -18,6 +20,7 @@ func setupTestDatabase(t *testing.T) (*sql.DB, func()) {
 	}
 }
 
+// TestCreateDBrootNode проверяет, что функция CreateDBrootNode создает таблицу root_nodes в базе данных.
 func TestCreateDBrootNode(t *testing.T) {
 	db, cleanup := setupTestDatabase(t)
 	defer cleanup()
@@ -33,6 +36,7 @@ func TestCreateDBrootNode(t *testing.T) {
 	}
 }
 
+// TestCreateDBChildNodes проверяет, что функция CreateDBChildNodes создает таблицу child_nodes в базе данных.
 func TestCreateDBChildNodes(t *testing.T) {
 	db, cleanup := setupTestDatabase(t)
 	defer cleanup()
@@ -48,6 +52,7 @@ func TestCreateDBChildNodes(t *testing.T) {
 	}
 }
 
+// TestCreateProgressTable проверяет, что функция CreateProgressTable создает таблицу parsing_progress в базе данных.
 func TestCreateProgressTable(t *testing.T) {
 	db, cleanup := setupTestDatabase(t)
 	defer cleanup()

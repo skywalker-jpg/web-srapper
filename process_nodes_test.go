@@ -9,6 +9,7 @@ import (
 	"testing"
 )
 
+// TestRetryHttpGet_Successful проверяет успешный HTTP GET запрос и обработку успешного ответа.
 func TestRetryHttpGet_Successful(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -27,6 +28,7 @@ func TestRetryHttpGet_Successful(t *testing.T) {
 	}
 }
 
+// TestRetryHttpGet_MaxRetriesExceeded проверяет обработку ситуации, когда превышено максимальное количество попыток.
 func TestRetryHttpGet_MaxRetriesExceeded(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -45,6 +47,7 @@ func TestRetryHttpGet_MaxRetriesExceeded(t *testing.T) {
 	}
 }
 
+// TestRetryHttpGet_NetworkError проверяет обработку сетевой ошибки при HTTP GET запросе.
 func TestRetryHttpGet_NetworkError(t *testing.T) {
 	nonExistentURL := "http://localhost:9999"
 	maxRetries := 3
@@ -58,6 +61,7 @@ func TestRetryHttpGet_NetworkError(t *testing.T) {
 	}
 }
 
+// TestRetryHttpGet_SuccessAfterRetries проверяет успешный HTTP GET запрос после нескольких попыток.
 func TestRetryHttpGet_SuccessAfterRetries(t *testing.T) {
 	attempts := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -83,6 +87,7 @@ func TestRetryHttpGet_SuccessAfterRetries(t *testing.T) {
 	}
 }
 
+// TestProcessChildNodes проверяет обработку данных дочерних узлов.
 func TestProcessChildNodes(t *testing.T) {
 	db, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
@@ -129,8 +134,8 @@ func TestProcessChildNodes(t *testing.T) {
 	}
 }
 
+// TestProcessRootNodes проверяет обработку данных корневых узлов.
 func TestProcessRootNodes(t *testing.T) {
-
 	db, err := sql.Open("sqlite3", ":memory:")
 	if err != nil {
 		t.Fatalf("Ошибка при создании фиктивной базы данных: %v", err)

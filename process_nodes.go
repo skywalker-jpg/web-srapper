@@ -130,7 +130,7 @@ func retryHttpGet(url string, maxRetries int) (*http.Response, error) {
 			return res, nil
 		}
 		fmt.Printf("Attempt %d: Error fetching %s: %v\n", i+1, url, err)
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second * 60)
 	}
 
 	return nil, fmt.Errorf("failed to fetch %s after %d attempts", url, maxRetries)

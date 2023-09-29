@@ -29,7 +29,6 @@ jobs:
           go test ./...
       
       - name: Build and run main package
-        working-directory: main
         run: |
           go build
           ./eshelon

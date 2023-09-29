@@ -27,9 +27,4 @@ jobs:
       - name: Test main package
         run: |
           go test ./...
-      
-      - name: Build and run main package
-        run: |
-          go build
-          ./eshelon
 
